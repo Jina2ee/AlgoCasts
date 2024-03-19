@@ -15,6 +15,56 @@
 //     [11, 16, 15, 6],
 //     [10,  9,  8, 7]]
 
-function matrix(n) {}
+function matrix(n) {
+  // create empty array of arrays called "results"
+  const results = []
+  for (let i = 0; i < n; i++) {
+    results.push([])
+  }
+  // create a counter variable, starting at 1
+  let counter = 1
+  // As long as (start column <= end column) AND (start row <= end row)
+  let startColumn = 0
+  let endColumn = n - 1
+  let startRow = 0
+  let endRow = n - 1
+  // Loop from start column to end column
+  while (startColumn <= endColumn && startRow <= endRow) {
+    // Top row
+    // At result[start_row][i] assign counter variable
+    // increment counter
+    for (let i = startColumn; i <= endColumn; i++) {
+      results[startRow][i] = counter
+      counter++
+    }
+    // Increment start row
+    startRow++
+    // Right column
+    // Loop from start row to end row
+    // At result[i][end_column] assign counter variable
+    for (let i = startRow; i <= endRow; i++) {
+      results[i][endColumn] = counter
+      // Incrementer counter
+      counter++
+    }
+    endColumn--
 
-module.exports = matrix;
+    // Bottom row
+    // Decrementer end row
+    for (let i = endColumn; i >= startColumn; i--) {
+      results[endRow][i] = counter
+      counter++
+    }
+    endRow--
+
+    // repeat for other two sides
+    for (let i = endRow; i >= startRow; i--) {
+      results[i][startColumn] = counter
+      counter++
+    }
+    startColumn++
+  }
+  return results
+}
+
+module.exports = matrix
